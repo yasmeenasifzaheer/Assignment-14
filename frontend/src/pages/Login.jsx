@@ -11,8 +11,13 @@ function Login() {
     e.preventDefault();
     try {
       const res = await api.post("/auth/login", { email, password });
-      console.log(res.data);
-      localStorage.setItem("token", res.data.token);
+      
+      // Check backend response key here
+      console.log(res.data); 
+
+      // Store token using the correct key from backend
+      localStorage.setItem("token", res.data.token || res.data.accessToken);
+
       navigate("/dashboard");
     } catch (err) {
       alert("Invalid credentials");
@@ -22,8 +27,15 @@ function Login() {
   return (
     <form onSubmit={submitHandler}>
       <h2>Login</h2>
-      <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+      <input
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) => setPassword(e.target.value)}
+      />
       <button>Login</button>
       <p>
         No account? <Link to="/register">Register</Link>
