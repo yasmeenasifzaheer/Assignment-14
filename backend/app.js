@@ -9,7 +9,12 @@ const customerRoutes = require("./routes/customerRoutes");
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "https://assignment-14-crm.netlify.app/", 
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(express.json()); // parse JSON bodies
 
 // Routes
